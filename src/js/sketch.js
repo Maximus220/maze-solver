@@ -12,6 +12,11 @@ function setup(){
 }
 
 function draw(){
+  /*setTimeout(function({
+    if(!maze.isFinished()){
+      maze.mazing();
+    }
+  }), 1000);*/
   maze.draw();
 }
 

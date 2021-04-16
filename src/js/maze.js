@@ -37,6 +37,7 @@ class Maze{
     }
     console.log(this.maze);
     this.mazing();
+
   }
 
   mazing(){
@@ -55,6 +56,8 @@ class Maze{
             neighbor.push(neighborT[i]); //List with only empty cases
           }
         }
+        console.log(this.maze);
+        console.log(neighbor);
         if(neighbor.length!=0){
           let tempRdm = rdm(0,neighbor.length-1); //Choose a random neighbor among all that aren't wall nor exit or entry
           for(let i=0;i<neighbor.length;i++){
@@ -71,7 +74,8 @@ class Maze{
 
       }
 
-      console.log(this.maze[4]);
+
+      //console.log(this.maze[4]);
 
     }
 
