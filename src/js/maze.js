@@ -1,11 +1,12 @@
 class Maze{
 
-  constructor(squareSideSize, x, entry, exit){
+  constructor(squareSideSize, x, entry, exit, isHard){
     this.size = squareSideSize;
     this.squareSideSize = squareSideSize;
     this.x = x;
     this.entry = entry;
     this.exit = exit;
+    this.isHard = isHard || false;
 
     this.maze = Array.from(Array(this.x), () => new Array(this.x));
 
@@ -32,9 +33,7 @@ class Maze{
       }
     }
     this.maze[this.entry[0]][this.entry[1]] = -2; //Entry
-    for(let i=0;i<this.exit.length;i++){
-      this.maze[this.exit[i][0]][this.exit[i][1]] = -4; //Exits
-    }
+    this.maze[this.exit[0]][this.exit[1]] = -4; //Exits
     console.log(this.maze);
     this.mazing();
 
@@ -42,43 +41,34 @@ class Maze{
 
   mazing(){
     while(this.isFinished()){
-      let tX = rdm(1, this.x-2);
-      let tY = rdm(1, this.x-2);
-      if(this.maze[tX][tY]%2!=0){ //If is a wall
-        let neighborT = [];
-        neighborT.push([[tX+1], [tY]]);
-        neighborT.push([[tX], [tY+1]]);
-        neighborT.push([[tX], [tY-1]]);
-        neighborT.push([[tX-1], [tY]]);
-        let neighbor = [];
-        for(let i=0;i<neighborT.length;i++){
-          if(this.maze[neighborT[i][0]][neighborT[i][1]]%2==0&&this.maze[neighborT[i][0]][neighborT[i][1]]!=-2&&this.maze[neighborT[i][0]][neighborT[i][1]]!=-4){
-            neighbor.push(neighborT[i]); //List with only empty cases
-          }
+        let tX = rdm(1, this.x-2);
+        let tY;
+        if(tX%2==0){
+          tY = rdm(1, this.x-2);
+        }else{
+          tY = rdm(2, this.x-2);
         }
-        console.log(this.maze);
-        console.log(neighbor);
-        if(neighbor.length!=0){
-          let tempRdm = rdm(0,neighbor.length-1); //Choose a random neighbor among all that aren't wall nor exit or entry
-          for(let i=0;i<neighbor.length;i++){
-            if(this.maze[neighbor[i][0]][neighbor[i][1]] != this.maze[neighbor[tempRdm][0]][neighbor[tempRdm][1]]){
-              this.replaceAll(this.maze[neighbor[i][0]][neighbor[i][1]], this.maze[neighbor[tempRdm][0]][neighbor[tempRdm][1]])
-              //this.maze[neighbor[i][0]][neighbor[i][1]] = this.maze[neighbor[tempRdm][0]][neighbor[tempRdm][1]];
+
+        if(this.maze[tX][tY]%2!=0){
+          let cell1;
+          let cell2;
+          if(this.maze[tX-1][tY]%2==0&&this.maze[tX+1][tY]%2==0){ //Then use horizontal cases
+            cell1 = [[tX-1],[tY]];
+            cell2 = [[tX+1],[tY]];
+            if(this.maze[cell1[0]][cell1[1]]!=this.maze[cell2[0]][cell2[1]]){
+              this.replaceAll(this.maze[cell2[0]][cell2[1]], this.maze[cell1[0]][cell1[1]])
+              this.maze[tX][tY] = this.maze[cell1[0]][cell1[1]];
+            }
+          }else if(this.maze[tX][tY-1]%2==0&&this.maze[tX][tY+1]%2==0){
+            cell1 = [[tX],[tY-1]];
+            cell2 = [[tX],[tY+1]];
+            if(this.maze[cell1[0]][cell1[1]]!=this.maze[cell2[0]][cell2[1]]){
+              this.replaceAll(this.maze[cell2[0]][cell2[1]], this.maze[cell1[0]][cell1[1]])
+              this.maze[tX][tY] = this.maze[cell1[0]][cell1[1]];
             }
           }
-          this.maze[tX][tY]=this.maze[neighbor[tempRdm][0]][neighbor[tempRdm][1]];
-        }else{
-          this.maze[tX][tY] = this.tempNum; //Set the old wall as an empty case if it isn't in contact with non-wall cases
-          this.tempNum+=2;
         }
-
       }
-
-
-      //console.log(this.maze[4]);
-
-    }
-
   }
 
   replaceAll(oldNum, newNum){
