@@ -1,4 +1,4 @@
-var sideSize = 14;
+var sideSize = 15;
 var x = 49;
 var maze;
 
@@ -8,15 +8,10 @@ function rdm(min, max) { // min and max included
 
 function setup(){
   window.canvas = createCanvas(1000, 800).position(windowWidth/2-canvas.width/2, 20);
-  maze = new Maze(sideSize, x, [0,1], [x-2, x-1]);
+  maze = new Maze(sideSize, x, [0,1], [x-2, x-1], 'merge', true);
 }
 
 function draw(){
-  /*setTimeout(function({
-    if(!maze.isFinished()){
-      maze.mazing();
-    }
-  }), 1000);*/
   maze.draw();
 }
 
