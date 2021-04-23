@@ -12,6 +12,8 @@ class Maze{
 
     this.step=0; //Used to compare number of steps of each algorithms
 
+    this.mazeSolve = Array.from(Array(this.x), () => new Array(this.x)); //Used to solve the maze
+
     this.init();
   }
 
@@ -35,6 +37,7 @@ class Maze{
     this.maze[this.exit[0]][this.exit[1]] = -4; //Exits
     console.log(this.maze);
     this.mazing();
+    this.solve();
 
   }
 
@@ -45,9 +48,9 @@ class Maze{
       let tX = rdm(1, this.x-2);
       let tY;
       if(tX%2==0){
-        tY = rdm(0, this.x-2)*2+1;
+        tY = rdm(0, this.x/2-1)*2+1;
       }else{
-        tY = rdm(0, this.x-2)*2+2;
+        tY = rdm(0, this.x/2-1)*2+2;
       }
 
       if(this.maze[tX][tY]%2!=0){
@@ -75,9 +78,9 @@ class Maze{
         let tX2 = rdm(1, this.x-2);
         let tY2;
         if(tX2%2==0){
-          tY2 = rdm(0, this.x-2)*2+1;
+          tY2 = rdm(0, this.x/2-1)*2+1; //----------------SOMETIMES IT GIVES 50 WHEN SIZE IS 49
         }else{
-          tY2 = rdm(0, this.x-2)*2+2;
+          tY2 = rdm(0, this.x/2-1)*2+2;
         }
         if(this.maze[tX2][tY2]%2!=0){
           this.maze[tX2][tY2]=1;
@@ -85,6 +88,7 @@ class Maze{
         }
       }
     }
+    console.log(this.maze);
     console.log(this.step);
   }
 
@@ -118,20 +122,60 @@ class Maze{
     return 0;
   }
 
-  solve(){ //WIP
-    let temp = true;
-    let interact = [this.entry]
-    while(temp){
-      interact.forEach((item, i) => {
-        if(this.maze[item[0]+1][item[1]] != null && this.maze[item[0]+1][item[1]]%2==0){
-          interact.push([[item[0]+1],[item[1]]]);
+  solve(){ //WIP || NOT WORKING BC FUCK MY LIFE
+    let interact = [];
+    let tempList=[];
+    interact.push(this.exit);
+    let i = 0;
+    while(typeof this.mazeSolve[this.entry[0]][this.entry[1]] === 'undefined'){
+      console.log(interact);
+      interact.forEach((item, j) => {
+        tempList=[];
+        tempList.push([item[0] + 1, item[1]]);
+        tempList.push([item[0] - 1, item[1]]);
+        tempList.push([item[0], item[1] + 1]);
+        tempList.push([item[0], item[1] - 1]);
+        console.log(tempList);
+        console.log(tempList[0] + tempList[1]);
+        tempList.forEach((tempItem, k) => {
+          console.log(this.isInMaze(tempItem[0],tempItem[1]));
+          if(this.isInMaze(tempItem[0],tempItem[1]) /*(tempItem[0] >= 0 && tempItem[0] < this.x && tempItem[1] >= 0 && tempItem[1] < this.x)*/ && this.maze[tempItem[0]][tempItem[1]]%2 != 0){ //If it isn't a wall
 
-          interact.shift();
-        }
+            if(!this.isInMazeSolver(tempItem[0],tempItem[1])){
+              this.mazeSolve[tempItem[0]][tempItem[1]] = i;
+              interact.push([ tempItem[0], tempItem[1] ]);
+              console.log(this.mazeSolve);
+              console.log(this.mazeSolve[48]);
+            }
+          }
+        });
+        interact.shift();
+
 
 
       });
+      i++;
 
+    }
+    console.log(this.mazeSolve);
+  }
+
+  //I really apologise to all developers... JS sucks, the other way to make that part would take me multiples 'for' and would take much more time to the computer
+  //Or I can eventually change it for : (tempItem[0] >= 0 && tempItem[0] < this.x && tempItem[1] >= 0 && tempItem[1] < this.x)
+  isInMaze(i1, i2){
+    try{
+      typeof this.maze[i1][i2];
+      return true;
+    }catch(e){
+      return false
+    }
+  }
+  isInMazeSolver(i1, i2){
+    try{
+      typeof this.mazeSolver[i1][i2];
+      return true;
+    }catch(e){
+      return false
     }
   }
 
@@ -144,10 +188,10 @@ class Maze{
     strokeWeight(0);
     for(let i=0; i<this.x;i++){
       for(let j=0;j<this.x;j++){
-        if(this.maze[i][j]%2==0){
-          fill('white');
-        }else{
+        if(this.maze[i][j]==1 || this.maze[i][j]==-1){
           fill('black');
+        }else{
+          fill('white');
         }
         square(i*this.size+50,j*this.size+50,this.size);
       }
