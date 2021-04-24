@@ -14,8 +14,7 @@ git clone https://github.com/Maximus220/maze-solver
 ## 📜 TO-DO
 
  * Make an option to watch step by step (setInterval)
- * Make options to change size, etc
- * Make map for colors
  * Make option to choose where are the entry/exit
  * Make option to choose the algorithm
  * Make option to change main color
+ * And much more! *(feel free to give me even more ideas via [Twitter](https://twitter.com/Maximus_pro_)!)*
