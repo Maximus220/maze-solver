@@ -12,8 +12,6 @@ class Maze{
 
     this.step=0; //Used to compare number of steps of each algorithms
 
-    this.mazeSolve = Array.from(Array(this.x), () => new Array(this.x)); //Used to solve the maze
-
     this.init();
   }
 
@@ -24,7 +22,7 @@ class Maze{
           this.maze[i][j] = -1; //Outer walls
         }else{
           if(i%2==0||j%2==0){
-            this.maze[i][j] = 1; //Inner walls
+            this.maze[i][j] = -3; //Inner walls
           }else{
             this.maze[i][j] = this.tempNum; //Empty case
             this.tempNum+=2;
@@ -37,7 +35,7 @@ class Maze{
     this.maze[this.exit[0]][this.exit[1]] = -4; //Exits
     console.log(this.maze);
     this.mazing();
-    this.solve();
+    //this.solve();
 
   }
 
@@ -48,9 +46,9 @@ class Maze{
       let tX = rdm(1, this.x-2);
       let tY;
       if(tX%2==0){
-        tY = rdm(0, this.x/2-1)*2+1;
+        tY = rdm(0, (this.x-1)/2)*2+1; //Eventually make possible for the user to change it to 'rdm(1, thix.x-1)'
       }else{
-        tY = rdm(0, this.x/2-1)*2+2;
+        tY = rdm(0, (this.x-2)/2)*2;
       }
 
       if(this.maze[tX][tY]%2!=0){
@@ -78,16 +76,17 @@ class Maze{
         let tX2 = rdm(1, this.x-2);
         let tY2;
         if(tX2%2==0){
-          tY2 = rdm(0, this.x/2-1)*2+1; //----------------SOMETIMES IT GIVES 50 WHEN SIZE IS 49
+          tY2 = rdm(0, (this.x-1)/2)*2+1;
         }else{
-          tY2 = rdm(0, this.x/2-1)*2+2;
+          tY2 = rdm(0, (this.x-2)/2)*2;
         }
         if(this.maze[tX2][tY2]%2!=0){
-          this.maze[tX2][tY2]=1;
+          this.maze[tX2][tY2]=-3;
           i++;
         }
       }
     }
+    this.replaceAll(this.maze[1][1], 0);
     console.log(this.maze);
     console.log(this.step);
   }
@@ -188,7 +187,7 @@ class Maze{
     strokeWeight(0);
     for(let i=0; i<this.x;i++){
       for(let j=0;j<this.x;j++){
-        if(this.maze[i][j]==1 || this.maze[i][j]==-1){
+        if(this.maze[i][j]%2 != 0){
           fill('black');
         }else{
           fill('white');
