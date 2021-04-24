@@ -16,7 +16,7 @@ function setup(){
   window.canvas.parent('mazeCanvas');
 
   //Sliders
-  sizeSlider = createSlider(1, 1000, x);
+  sizeSlider = createSlider(1, 999, x);
   sizeSlider.parent('sizeSlider');
 
   sideSizeSlider = createSlider(1, 50, sideSize);
@@ -26,8 +26,11 @@ function setup(){
 }
 
 function draw(){
+  if(sizeSlider.value()%2==0){
+    sizeSlider.value(sizeSlider.value()+1);
+  }
   x=sizeSlider.value();
-	document.getElementById('sizeDisplay').innerHTML = sizeSlider.value();
+  document.getElementById('sizeDisplay').innerHTML = sizeSlider.value();
   sideSize=sideSizeSlider.value();
 	document.getElementById('sideSizeDisplay').innerHTML = sideSizeSlider.value();
   document.getElementById('step').innerHTML = "Steps : "+maze.step;
