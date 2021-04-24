@@ -1,5 +1,5 @@
-var sideSize = 15;
-var x = 49;
+var sideSize = 7;
+var x = 99;
 var maze;
 
 function rdm(min, max) { // min and max included

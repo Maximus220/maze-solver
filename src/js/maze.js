@@ -9,13 +9,14 @@ class Maze{
     this.maze = Array.from(Array(this.x), () => new Array(this.x)); //List containing each pixels
     this.tempNum=0; //Tempnumber used with the merging algorithm
     this.algorithm = algorithm || 'merge'; //To choose the algorithm used ['merge', 'tree']
-
     this.step=0; //Used to compare number of steps of each algorithms
 
     this.init();
   }
 
-  init(){ //Create the maze
+
+//CREATING
+  init(){ //Create the grid
     for(let i=0; i<this.x;i++){
       for(let j=0;j<this.x;j++){
         if(i==0||j==0||i==this.x-1||j==this.x-1){ //Outter walls
@@ -33,9 +34,9 @@ class Maze{
     }
     this.maze[this.entry[0]][this.entry[1]] = -2; //Entry
     this.maze[this.exit[0]][this.exit[1]] = -4; //Exits
-    console.log(this.maze);
+    //console.log(this.maze);
     this.mazing();
-    //this.solve();
+    this.solve();
 
   }
 
@@ -87,8 +88,8 @@ class Maze{
       }
     }
     this.replaceAll(this.maze[1][1], 0);
-    console.log(this.maze);
-    console.log(this.step);
+    /*console.log(this.maze);
+    console.log(this.step);*/
   }
 
   replaceAll(oldNum, newNum){
@@ -121,81 +122,76 @@ class Maze{
     return 0;
   }
 
-  solve(){ //WIP || NOT WORKING BC FUCK MY LIFE
+
+//SOLVING
+  solve(){
     let interact = [];
     let tempList=[];
     interact.push(this.exit);
-    let i = 0;
-    while(typeof this.mazeSolve[this.entry[0]][this.entry[1]] === 'undefined'){
-      console.log(interact);
+    let i = 1;
+    while(this.maze[this.entry[0]][this.entry[1]] === -2 /*|| interact.length!=0*/){
       interact.forEach((item, j) => {
         tempList=[];
         tempList.push([item[0] + 1, item[1]]);
         tempList.push([item[0] - 1, item[1]]);
         tempList.push([item[0], item[1] + 1]);
         tempList.push([item[0], item[1] - 1]);
-        console.log(tempList);
-        console.log(tempList[0] + tempList[1]);
         tempList.forEach((tempItem, k) => {
-          console.log(this.isInMaze(tempItem[0],tempItem[1]));
-          if(this.isInMaze(tempItem[0],tempItem[1]) /*(tempItem[0] >= 0 && tempItem[0] < this.x && tempItem[1] >= 0 && tempItem[1] < this.x)*/ && this.maze[tempItem[0]][tempItem[1]]%2 != 0){ //If it isn't a wall
-
-            if(!this.isInMazeSolver(tempItem[0],tempItem[1])){
-              this.mazeSolve[tempItem[0]][tempItem[1]] = i;
+          if((tempItem[0] >= 0 && tempItem[0] < this.x && tempItem[1] >= 0 && tempItem[1] < this.x) && this.maze[tempItem[0]][tempItem[1]]!=-4 && this.maze[tempItem[0]][tempItem[1]]!=-1 && this.maze[tempItem[0]][tempItem[1]]!=-3){ //If it isn't a wall
+            if(this.maze[tempItem[0]][tempItem[1]]==0||this.maze[tempItem[0]][tempItem[1]]==-2){
+              //console.log("I = "+ i+ " ; Maze = "+this.maze[tempItem[0]][tempItem[1]]+" ; tempItem[0] = "+tempItem[0]+" ; tempItem[1]="+tempItem[1] +" ; ");
+              this.maze[tempItem[0]][tempItem[1]] = i;
               interact.push([ tempItem[0], tempItem[1] ]);
-              console.log(this.mazeSolve);
-              console.log(this.mazeSolve[48]);
             }
           }
         });
-        interact.shift();
-
-
-
+        interact.splice(j,1);
+        i++;
       });
-      i++;
-
     }
-    console.log(this.mazeSolve);
+    console.log(this.maze);
+    this.drawSolution();
   }
 
-  //I really apologise to all developers... JS sucks, the other way to make that part would take me multiples 'for' and would take much more time to the computer
-  //Or I can eventually change it for : (tempItem[0] >= 0 && tempItem[0] < this.x && tempItem[1] >= 0 && tempItem[1] < this.x)
-  isInMaze(i1, i2){
-    try{
-      typeof this.maze[i1][i2];
-      return true;
-    }catch(e){
-      return false
+  drawSolution(){
+    let interact = this.entry;
+    let tempList = [];
+    for(let i=this.maze[this.entry[0]][this.entry[1]] ; i>=0 ; i--){
+      console.log(i);
+      this.maze[interact[0]][interact[1]] = -5;
+      tempList=[];
+      tempList.push([interact[0] + 1, interact[1]]);
+      tempList.push([interact[0] - 1, interact[1]]);
+      tempList.push([interact[0], interact[1] + 1]);
+      tempList.push([interact[0], interact[1] - 1]);
+      tempList.forEach((tempItem, k) => {
+        if((tempItem[0] >= 0 && tempItem[0] < this.x && tempItem[1] >= 0 && tempItem[1] < this.x) && (this.maze[tempItem[0]][tempItem[1]]==(i-1) || this.maze[tempItem[0]][tempItem[1]]==-4)){
+          interact = [tempItem[0], tempItem[1]];
+        }
+      });
     }
   }
-  isInMazeSolver(i1, i2){
-    try{
-      typeof this.mazeSolver[i1][i2];
-      return true;
-    }catch(e){
-      return false
-    }
-  }
 
 
-
-
-
-
+//DRAWING
   draw(){
     strokeWeight(0);
     for(let i=0; i<this.x;i++){
       for(let j=0;j<this.x;j++){
-        if(this.maze[i][j]%2 != 0){
+        if(this.maze[i][j] == -3 || this.maze[i][j] == -1){
           fill('black');
         }else{
-          fill('white');
+          if(this.maze[i][j]>0){
+            let c = color(this.maze[i][j]*0.1, this.maze[i][j]*0.01, this.maze[i][j]*0.01+100);
+            fill(c);
+          }else if(this.maze[i][j]==-5){
+            fill('green');
+          }else{
+            fill('white');
+          }
         }
         square(i*this.size+50,j*this.size+50,this.size);
       }
     }
   }
-
-
 }
