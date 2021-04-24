@@ -1,5 +1,7 @@
 <html>
   <head>
+    <link rel="stylesheet" href="./src/css/css.css">
+
     <script language=" javascript" type="text/javascript" src="lib/p5.js"></script>
 
     <script language=" javascript" type="text/javascript" src="src/js/maze.js"></script>
@@ -7,8 +9,25 @@
 
   </head>
   <body>
-    <canvas id="mazeCanvas"></canvas>
-    <div id="options">
+    <div id="mazeCanvas"></div>
+    <div id="settings">
+
+      <div class="option">
+        <span id="step"></span>
+      </div>
+      <div class="option">
+        <label for="sizeSlider">Size : </label>
+        <span id="sizeSlider"></span>
+        <span id="sizeDisplay"></span>
+      </div>
+
+      <div class="option">
+        <label for="sideSizeSlider">Side size : </label>
+        <span id="sideSizeSlider"></span>
+        <span id="sideSizeDisplay"></span>
+      </div>
+
+      <button type="button" name="reload" onclick="regenMaze();">Try changes!</button>
 
     </div>
   </body>

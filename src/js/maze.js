@@ -10,6 +10,7 @@ class Maze{
     this.tempNum=0; //Tempnumber used with the merging algorithm
     this.algorithm = algorithm || 'merge'; //To choose the algorithm used ['merge', 'tree']
     this.step=0; //Used to compare number of steps of each algorithms
+    this.distanceEntryExit=((this.x-2)**2) //Distance between the start and the end (will change after being solved)
 
     this.init();
   }
@@ -150,6 +151,7 @@ class Maze{
       });
     }
     //console.log(this.maze);
+    this.distanceEntryExit = this.maze[this.entry[0]][this.entry[1]];
     this.drawSolution();
   }
 
@@ -181,7 +183,7 @@ class Maze{
           fill('black');
         }else{
           if(this.maze[i][j]>0){
-            let c = color(this.maze[i][j]*0.1, this.maze[i][j]*0.01, this.maze[i][j]*0.01+100);
+            let c = color(300, map(this.maze[i][j], 1, this.distanceEntryExit, 0, 255), 100);
             fill(c);
           }else if(this.maze[i][j]==-5){
             fill('green');
@@ -189,7 +191,7 @@ class Maze{
             fill('white');
           }
         }
-        square(i*this.size+50,j*this.size+50,this.size);
+        square(i*this.size,j*this.size,this.size);
       }
     }
   }
