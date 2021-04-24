@@ -1,4 +1,4 @@
-# 🔐 Maze Solver V.0.1 ⚠️**This version isn't up-to-date.**⚠️
+# 🔐 Maze Solver V.0.1 ⚠️This version isn't up-to-date.⚠️
 Maze **generation** and **solving** with **customizable parameters**.
 
 # 🔧 How to use
