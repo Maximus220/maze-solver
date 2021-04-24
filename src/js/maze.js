@@ -149,7 +149,7 @@ class Maze{
         i++;
       });
     }
-    console.log(this.maze);
+    //console.log(this.maze);
     this.drawSolution();
   }
 
@@ -157,7 +157,6 @@ class Maze{
     let interact = this.entry;
     let tempList = [];
     for(let i=this.maze[this.entry[0]][this.entry[1]] ; i>=0 ; i--){
-      console.log(i);
       this.maze[interact[0]][interact[1]] = -5;
       tempList=[];
       tempList.push([interact[0] + 1, interact[1]]);
