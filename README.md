@@ -1,10 +1,10 @@
-# maze-solver
+# 🔐 Maze Solver V.0.1 ⚠️**This version isn't up-to-date.**⚠️
+Maze **generation** and **solving** with **customizable parameters**.
 
-
-## 📜 TO-DO
-
- * Make an option to watch step by step (setInterval)
- * Make options to change size, etc
- * Make map for colors
- * Make option to choose where are the entry/exit
- * Make option to choose the algorithm
+# 🔧 How to use
+1. __Clone__ this repository manually or via the following command :
+```
+git clone https://github.com/Maximus220/maze-solver/tree/V.0.1-stable-pre-release
+```
+2. __Launch__ the HTML file in your favorite browser.
+3. __Have fun!__ 🎉
