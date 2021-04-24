@@ -1,6 +1,6 @@
 class Maze{
 
-  constructor(squareSideSize, x, entry, exit, algorithm, isHard){
+  constructor(squareSideSize, x, entry, exit, algorithm, isHard, colors){
     this.size = squareSideSize; //Number of pixel constituting a single pixel
     this.x = x; //Size of the maze (always a square)
     this.entry = entry; //Coord of the entry
@@ -11,6 +11,8 @@ class Maze{
     this.algorithm = algorithm || 'merge'; //To choose the algorithm used ['merge', 'tree']
     this.step=0; //Used to compare number of steps of each algorithms
     this.distanceEntryExit=((this.x-2)**2) //Distance between the start and the end (will change after being solved)
+    this.isDrew = false;
+    this.colors = colors;
 
     this.init();
   }
@@ -175,6 +177,11 @@ class Maze{
 
 
 //DRAWING
+  setColors(colors){
+    this.colors = colors;
+    this.isDrew = false;
+  }
+
   draw(){
     strokeWeight(0);
     for(let i=0; i<this.x;i++){
@@ -183,7 +190,15 @@ class Maze{
           fill('black');
         }else{
           if(this.maze[i][j]>0){
-            let c = color(300, map(this.maze[i][j], 1, this.distanceEntryExit, 0, 255), 100);
+            let temp = [];
+            for(let x=0;x<this.colors.length;x++){
+              if(this.colors[x]=='map'){
+                temp[x] = map(this.maze[i][j], 1, this.distanceEntryExit, 0, 255);
+              }else{
+                temp[x] = this.colors[x];
+              }
+            }
+            let c = color(temp[0],temp[1],temp[2]);
             fill(c);
           }else if(this.maze[i][j]==-5){
             fill('green');
@@ -194,5 +209,6 @@ class Maze{
         square(i*this.size,j*this.size,this.size);
       }
     }
+    this.isDrew = true;
   }
 }

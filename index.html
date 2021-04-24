@@ -10,25 +10,69 @@
   </head>
   <body>
     <div id="mazeCanvas"></div>
-    <div id="settings">
+    <div id="parameters">
+      <!-- GLOBAL SETTINGS -->
+      <div class="settings">
 
-      <div class="option">
-        <span id="step"></span>
+        <div class="option">
+          <span id="step"></span>
+        </div>
+        <div class="option">
+          <label for="sizeSlider">Size : </label>
+          <span id="sizeSlider"></span>
+          <span id="sizeDisplay"></span>
+        </div>
+
+        <div class="option">
+          <label for="sideSizeSlider">Side size : </label>
+          <span id="sideSizeSlider"></span>
+          <span id="sideSizeDisplay"></span>
+        </div>
+
+        <button type="button" id="reload" onclick="regenMaze();">Reload!</button>
+
       </div>
-      <div class="option">
-        <label for="sizeSlider">Size : </label>
-        <span id="sizeSlider"></span>
-        <span id="sizeDisplay"></span>
+      <!-- COLOR SETTINGS -->
+      <div class="settings">
+
+        <div class="option-c">
+          <span style="color: red;">Red</span>
+          <span id="checkColor0"></span>
+          <div class="slider">
+            <label for="sliderColor0">Value : </label>
+            <span id="sliderColor0"></span>
+            <span id="displayColor0"></span>
+          </div>
+        </div>
+        <div class="option-c">
+          <span style="color: green;">Green</span>
+          <span id="checkColor1"></span>
+          <div class="slider">
+            <label for="sliderColor1">Value : </label>
+            <span id="sliderColor1"></span>
+            <span id="displayColor1"></span>
+          </div>
+        </div>
+        <div class="option-c">
+          <span style="color: blue;">Blue</span>
+          <span id="checkColor2"></span>
+          <div class="slider">
+            <label for="sliderColor2">Value : </label>
+            <span id="sliderColor2"></span>
+            <span id="displayColor2"></span>
+          </div>
+        </div>
+        <button type="button" onclick="redrawMaze();">Re-Draw!</button>
+
       </div>
+      <!-- ANIMATION SETTINGS -->
+      <div class="settings">
 
-      <div class="option">
-        <label for="sideSizeSlider">Side size : </label>
-        <span id="sideSizeSlider"></span>
-        <span id="sideSizeDisplay"></span>
+        <div class="option">
+          Soon !
+        </div>
+
       </div>
-
-      <button type="button" name="reload" onclick="regenMaze();">Try changes!</button>
-
     </div>
   </body>
 </html>

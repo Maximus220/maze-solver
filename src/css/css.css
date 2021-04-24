@@ -5,17 +5,30 @@ body{
   justify-content: center;
   flex-flow: row wrap;
 }
-#settings{
+.parameters{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+}
+.settings{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-left: 45px;
+  margin: 45px;
   padding: 25px;
   background-color: #b0b0b0;
   border: solid;
   border-radius: 15px;
   border-color: #858585;
+}
+.slider{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 #mazeCanvas{
   display: flex;
@@ -24,10 +37,19 @@ body{
 }
 
 .option{
-  margin-bottom: 15px;
+  margin-bottom: 7px;
+  margin-top: 7px;
 
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.option-c{
+  margin-bottom: 15px;
+
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
