@@ -8,8 +8,8 @@ Maze **generation** and **solving** with **customizable parameters**.
 ```
 git clone https://github.com/Maximus220/maze-solver
 ```
-1. __Launch__ the HTML file in your favorite browser.
-1. __Have fun!__ 🎉
+2. __Launch__ the HTML file in your favorite browser.
+3. __Have fun!__ 🎉
 
 ## 📜 TO-DO
 
