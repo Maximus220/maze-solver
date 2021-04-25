@@ -1,6 +1,7 @@
 var sideSize = 7;
 var x = 99;
 var maze;
+var isComplex = true;
 
 var colors = [100, 'map', 255];
 
@@ -9,6 +10,7 @@ var sizeSlider;
 var sideSizeSlider;
 var checkboxesColor = [];
 var slideColor = [];
+var checkboxComplex;
 
 function rdm(min, max) { // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -26,6 +28,7 @@ function setup(){
   sideSizeSlider = createSlider(1, 50, sideSize);
   sideSizeSlider.parent('sideSizeSlider');
 
+  //Checkboxes
   for(let x=0;x<3;x++){
     if(colors[x]=='map'){
       checkboxesColor.push(createCheckbox('Map', true));
@@ -39,7 +42,11 @@ function setup(){
     slideColor[x].parent('sliderColor'+x);
   }
 
-  maze = new Maze(sideSize, x, [0,1], [x-2, x-1], 'merge', true, colors);
+  checkboxComplex = createCheckbox('isComplex', isComplex);
+  checkboxComplex.parent('checkboxComplex')
+
+  //Initial maze creation
+  maze = new Maze(sideSize, x, [0,1], [x-2, x-1], 'merge', isComplex, colors);
 }
 
 function draw(){
@@ -54,6 +61,7 @@ function draw(){
   }else{
     document.getElementById('reload').innerHTML = "Reload!";
   }
+  isComplex = checkboxComplex.checked();
   //Load colors parameters
   for(let x=0;x<3;x++){
     if(checkboxesColor[x].checked()){
@@ -77,7 +85,7 @@ function redrawMaze(){
 }
 
 function regenMaze(){
-  maze = new Maze(sideSize, x, [0,1], [x-2, x-1], 'merge', true, colors);
+  maze = new Maze(sideSize, x, [0,1], [x-2, x-1], 'merge', isComplex, colors);
   window.canvas = resizeCanvas(x*sideSize, x*sideSize);
 }
 
