@@ -11,7 +11,7 @@ git clone https://github.com/Maximus220/maze-solver
 2. __Launch__ the HTML file in your favorite browser.
 3. __Have fun!__ 🎉
 
-## 📜 TO-DO
+## 📜 TO-DO for future versions
 
  * Make an option to watch step by step (animation)
  * Make option to choose where are the entry/exit
