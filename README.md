@@ -1,7 +1,7 @@
 # 🔐 Maze Solver
 Maze **generation** and **solving** with **customizable parameters**.
 
-![demo2](demo/demo2.png)
+![demo2](demo/demo1.png)
 
 # 🔧 How to use
 1. __Clone__ this repository manually or via the following command :
